@@ -1,14 +1,14 @@
 # AIRFLOW-abyelash
 To run the project type in command line:
 cd docker &&
-#Just FIRST run
+# Just FIRST run
 docker-compose up postgres
 docker-compose up initdb
 # Then comment INITDB service in docker/docker-compose.yml
 
-#Next runs
+# Next runs
 docker-compose up
-#Full rebuild after changing config - e.g airrflow.cgf
+# Full rebuild after changing config - e.g airrflow.cgf
 docker-compose up --build
 
 2. Configuration in AIRFLOW
