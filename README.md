@@ -1,6 +1,5 @@
 # AIRFLOW-abyelash
 To run the project type in command line:
-
 cd docker
 # Just FIRST run
 docker-compose up postgres
@@ -12,7 +11,7 @@ docker-compose up
 # Full rebuild after changing config - e.g airrflow.cgf
 docker-compose up --build
 
-2. Configuration in AIRFLOW
+# Configuration in AIRFLOW
 2.1 create new Connection(http://localhost:8080/admin/connection/) for Postgres with name: postres_abetest
 2.2 create new Variable(http://localhost:8080/admin/variable/) with
 name: name_path_variable
