@@ -1,6 +1,7 @@
 # AIRFLOW-abyelash
 To run the project type in command line:
-cd docker &&
+
+cd docker
 # Just FIRST run
 docker-compose up postgres
 docker-compose up initdb

@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 from datetime import timedelta
 import airflow
+import logging
 from airflow.models import DAG
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.operators.postgres_operator import PostgresOperator
@@ -10,6 +11,7 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.python_operator import BranchPythonOperator
 
+log = logging.getLogger(__name__)
 postgres_def_conn_id = 'postres_abetest'
 postgres_def_schema_name = 'public'
 
@@ -69,10 +71,10 @@ def create_dag(dag_id, dagconf, default_args):
     table_name = dagconf.get('table_name')
     sql4create = f'CREATE TABLE {table_name} (custom_id integer NOT NULL, user_name VARCHAR (50) NOT NULL, timestamp TIMESTAMP NOT NULL);'
     sql4insert='INSERT INTO '+table_name+" VALUES (%s, '{{ ti.xcom_pull(task_ids='execute_bash') }}', %s);"
-    print('DAG_ID:'+dag_id)
-    print('TABLE_NAME:'+ table_name)
-    print('SQL4CREATE:'+sql4create)
-    print('SQL4INSERT:'+sql4insert)
+    log.debug('DAG_ID:'+dag_id)
+    log.debug('TABLE_NAME:'+ table_name)
+    log.debug('SQL4CREATE:'+sql4create)
+    log.debug('SQL4INSERT:'+sql4insert)
     with  DAG(
             dag_id=dag_id,
             default_args=default_args,
