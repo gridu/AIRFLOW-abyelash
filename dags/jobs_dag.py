@@ -10,6 +10,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.python_operator import BranchPythonOperator
+from airflow.operators.postgres_abe_custom import PostgreSQLCheckTable, PostgreSQLCountRows
 
 log = logging.getLogger(__name__)
 postgres_def_conn_id = 'postres_abetest'
@@ -104,6 +105,11 @@ def create_dag(dag_id, dagconf, default_args):
                               op_kwargs={'dag_id': dag_id, 'postgres_conn_id': postgres_def_conn_id, # trying kwargs for research reason
                                          'schema_name': postgres_def_schema_name, 'table_name': table_name},
                               provide_context=True)
+            >> PostgreSQLCountRows(
+                             task_id='query_via_abe_operator',
+                             table_name=table_name,
+                             postgres_conn_id = postgres_def_conn_id,
+                             provide_context=True)
             >>PythonOperator(
                 task_id='job_push_result_task',
                 python_callable=push_xcom_end_job,

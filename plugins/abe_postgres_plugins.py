@@ -1,5 +1,5 @@
 """ import operators with
-from airflow.operators.postgres_custom import PostgreSQLCheckTable, PostgreSQLCountRows """
+from airflow.operators.postgres_abe_custom import PostgreSQLCheckTable, PostgreSQLCountRows """
 
 import logging
 
