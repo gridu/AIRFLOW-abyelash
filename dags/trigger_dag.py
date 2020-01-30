@@ -32,10 +32,10 @@ def print_jobs_res(**context):
         print(f'Result of QUERY is :: {queryresult}')
 
 def return_sensor_tasks():
-    dyntasks = []
+    tasks = []
     for dag_id in config:
-        dyntasks.append(ExternalTaskSensor(task_id='wait_' + dag_id, external_dag_id=dag_id, external_task_id=None))
-    return dyntasks
+        tasks.append(ExternalTaskSensor(task_id='wait_' + dag_id, external_dag_id=dag_id, external_task_id=None))
+    return tasks
 
 def load_subdag(parent_dag_name, child_dag_name, args):
     dag_subdag = DAG(
@@ -53,13 +53,13 @@ def load_subdag(parent_dag_name, child_dag_name, args):
     return dag_subdag
 
 def return_trigger_tasks():
-    dyntasks = []
+    tasks = []
     for dag_id in config:
-        dyntasks.append(TriggerDagRunOperator(
+        tasks.append(TriggerDagRunOperator(
                             task_id="trigger_"+dag_id,
                             trigger_dag_id=dag_id,
                             execution_date='{{ execution_date }}'))
-    return dyntasks
+    return tasks
 
 with DAG(
         dag_id=parent_dag,
